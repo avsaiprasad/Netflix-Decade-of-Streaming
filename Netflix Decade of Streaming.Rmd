@@ -1,0 +1,176 @@
+---
+title: "Module 3 Project 3: Presentation or Website Visualization Assignment"
+subtitle: "INSH 5302 -  Information Design & Visual Analytics"
+author: "ENTER YOUR NAME HERE"
+date: "Apr 7, 2024"
+output:
+  html_document:
+    code_download: true
+    fig_caption: yes
+    theme: lumen
+    toc: yes
+    toc_depth: 2
+    df_print: kable
+    toc_float:
+      collapsed: no
+---
+
+```{r, message=FALSE}
+# Required packages for our course. Do not delete.
+library(tidyverse)
+library(mosaic)
+library(reshape2)
+library(ggrepel)
+```
+
+# Big-picture
+
+## Research Question
+
+*What is the question you hope to answer with your data visualization?*
+
+With the help of the visualization I would like to show the understanding of  what movies, shows, and other contents available in different countries, Movie ratings analysis and many more.
+
+
+* * *
+
+# Data
+
+## Description of data
+
+
+This tabular dataset consists of listings of all the movies and tv shows available on Netflix, along with details such as - cast, directors, ratings, release year, duration, etc. This data is taken from Tableau Sample dataset.
+
+## Load data into R
+
+*Include the code to load your data here. Using the head() function, show the first 10 rows of data. *
+
+```{r, message = FALSE, warning = FALSE}
+netflix <- read.csv("netflix_titles.csv")
+```
+
+* * *
+
+# Variables
+
+*Using the names() function, show the names of all the columns (i.e. potential variables) in your data set. Delete this when complete.*
+```{r, message = FALSE, warning = FALSE}
+names(netflix)
+```
+
+The variables I used in my data visualization design are:
+
+1. show_id
+2. type
+3. title
+4. director
+5. cast
+6. country
+7. date_added
+8. release_year
+9. rating
+10. duration
+11. listed_in
+12. description
+* * *
+
+# Data Analysis
+
+## Summary Statistics
+
+
+```{r, message = FALSE, warning = FALSE}
+favstats('netflix')
+```
+
+> Provide the high-level insights you used to craft your data visualization design.
+
+## Additional Analyses
+
+*If you conducted any other analyses of your data set to gather the data in your project, use this section to conduct your research. Delete this when complete.*
+```{r, message = FALSE, warning = FALSE}
+df_by_date <- netflix %>% group_by(date_added,type) %>% summarise(addedToday = n()) %>% 
+            ungroup() %>% group_by(type) %>% mutate(Total_Number_of_Shows = cumsum(addedToday), label = if_else(date_added == max(date_added,na.rm = T), as.character(type), NA_character_))
+
+
+df_show_categories <- netflix %>% 
+                        select(c('show_id','type','listed_in')) %>% 
+                        separate_rows(listed_in, sep = ',') %>%
+                        rename(Show_Category = listed_in)
+
+
+
+write.csv(df_show_categories, "show_categories.csv", row.names = FALSE)
+
+
+```
+* * *
+#Tableau for additional analysis.
+
+<div class='tableauPlaceholder' id='viz1712685196579' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ne&#47;Netflix-DecadeofStreaming&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Netflix-DecadeofStreaming&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ne&#47;Netflix-DecadeofStreaming&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>
+
+
+
+
+```{js, embedcode, echo = FALSE}
+var divElement = document.getElementById('viz1712685196579');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1016px';vizElement.style.height='5027px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1016px';vizElement.style.height='5027px';} else { vizElement.style.width='100%';vizElement.style.height='2627px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);
+```
+* * *
+
+* * *
+
+# Interactive Presentation or Website Visualiztion
+
+*Module 3's Project allows students to choose ONE OPTION among the two options provided below. You should denote which ONE of the two options you plan to pursue and provide a brief overview of your vision for the project. Delete the other options that you will not be pursuing.*
+
+## Option 1 | Interactive Canva Presentation
+Students will use Canva to create an interactive presentation that showcases their data findings and creates a cohesive, one-stop hub for information regarding their topics. Students must include a minimum of 5 pages of analysis, 1 page for their home, and 1 page for references/overview. 
+
+<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGB2YLEoXc&#x2F;5Xe6BQKmp_Xzrzd-FX6qYw&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen" data-external="1">
+  </iframe>
+</div>
+<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGB2YLEoXc&#x2F;5Xe6BQKmp_Xzrzd-FX6qYw&#x2F;view?utm_content=DAGB2YLEoXc&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Your paragraph text</a> by Venkata Sai Prasad Aka
+
+
+
+### Descriptions of Canva Pages (Excluding the Home Page and Reference Page)
+
+For each page, you should provide detailed reflection on the data visualization you used and how it helps to answer your over arching research question. 
+
+#### Canva Page 1
+
+This Overview discusses the variety of content available on Netflix and introduces charts and visuals that analyze the platform's growth from 2008 to 2020. The Area Chart highlights the transformation of Netflix from a DVD shipping service to a leading video on demand platform, noting the significant increase in its library, which reached 7,760 titles by the end of 2020.
+
+#### Canva Page 2
+
+This Chart examines the global distribution of movies and TV shows on Netflix, noting a higher overall presence of movie content. Specifically, it highlights that Netflix in India predominantly offers movies, while in South Korea, TV shows form the majority of the platform's content. 
+
+#### Canva Page 3
+
+This analysis delves into how Netflix targets different age groups in various countries, noting that the United States, India, and the UK are top content producers. It highlights that a significant portion of children's programming on Netflix is produced in the U.S., while in India, South Korea, and Egypt, there is a focus on content for teenagers.
+
+#### Canva Page 4
+
+
+The Pie chart focuses on the distribution of Netflix content across different genres, showing that movies often dominate certain genres, with some being exclusively movie-centric. It also touches on the age-specific ratings by bar chart for movies and series, such as "TV Mature," indicating content meant for adults, with "TV-MA" and "TV-14" being the most common ratings for both movies and TV shows.
+
+#### Canva Page 5
+
+The Bubble Chart and Bar chart highlights the top 10 directors and actors with the most shows on Netflix, emphasizing the significance of actors in the success of movies and series. It suggests that actors play a key role in attracting viewers, many of whom have personal favorites.
+
+
+# References
+
+*Include any references that you might have used to construct your graphic. This may include, but is not limited to citations for: graphics used, coding techniques, data collection, R-Markdown/RStudio documentation, etc. Delete this when complete.*
+
+1. https://www.kaggle.com/datasets/shivamb/netflix-shows
+
+* * *
+
+## All done!
+
+Knit the completed R Markdown file as a HTML document (click the "Knit" button at the top of the script editor window) and upload it to the submission portal on Canvas.
